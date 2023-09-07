@@ -3,5 +3,9 @@
 while true; do
   curl "$NIGHTSCOUT_HOST/api/v1/entries.json?token=$NIGHTSCOUT_TOKEN" | aws s3 cp - "s3://$AWS_S3_BUCKET/api/v1/entries.json"
   aws s3api put-object-acl --bucket "$AWS_S3_BUCKET" --key api/v1/entries.json --acl public-read
+
+  curl "$NIGHTSCOUT_HOST/api/v1/entries/sgv.json?token=$NIGHTSCOUT_TOKEN&count=8640" | aws s3 cp - "s3://$AWS_S3_BUCKET/api/v1/entries/sgv.json"
+  aws s3api put-object-acl --bucket "$AWS_S3_BUCKET" --key api/v1/entries/sgv.json --acl public-read
+
   sleep "${WAIT_IN_SECONDS:=60}"
 done
